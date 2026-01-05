@@ -2,12 +2,15 @@ import { create } from 'zustand';
 import {
     applyNodeChanges,
     applyEdgeChanges,
-    type Edge,            // <--- FIXED
-    type Node,            // <--- FIXED
-    type OnNodesChange,   // <--- FIXED
-    type OnEdgesChange,   // <--- FIXED
-    type NodeChange       // <--- FIXED
+    addEdge,
+    type Edge,
+    type Node,
+    type OnNodesChange,
+    type OnEdgesChange,
+    type NodeChange,
+    type Connection
 } from '@xyflow/react';
+import type { AnalysisReport } from '../lib/api/api';
 
 export type OTMNodeData = {
     label: string;
@@ -28,11 +31,16 @@ type DiagramState = {
     nodes: AppNode[];
     edges: Edge[];
     selectedNodeId: string | null;
+    analysisReport: AnalysisReport | null;
 
     onNodesChange: OnNodesChange<AppNode>;
     onEdgesChange: OnEdgesChange;
+    onConnect: (connection: Connection) => void;
     setSelectedNode: (id: string | null) => void;
     updateNodeData: (id: string, newData: Partial<OTMNodeData>) => void;
+    loadDiagram: (nodes: AppNode[], edges: Edge[]) => void;
+    setAnalysisReport: (report: AnalysisReport | null) => void;
+    addNode: (node: AppNode) => void;
 };
 
 export const useDiagramStore = create<DiagramState>((set, get) => ({
@@ -55,6 +63,7 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
     ],
     edges: [],
     selectedNodeId: null,
+    analysisReport: null,
 
     onNodesChange: (changes: NodeChange<AppNode>[]) => {
         set({
@@ -64,6 +73,11 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
     onEdgesChange: (changes) => {
         set({
             edges: applyEdgeChanges(changes, get().edges),
+        });
+    },
+    onConnect: (connection) => {
+        set({
+            edges: addEdge({ ...connection, type: 'default', label: 'Data Flow' }, get().edges),
         });
     },
 
@@ -80,4 +94,16 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
             ),
         }));
     },
+
+    loadDiagram: (nodes, edges) => {
+        set({ nodes, edges, selectedNodeId: null, analysisReport: null });
+    },
+
+    setAnalysisReport: (report) => {
+        set({ analysisReport: report });
+    },
+
+    addNode: (node) => {
+        set((state) => ({ nodes: [...state.nodes, node] }));
+    }
 }));

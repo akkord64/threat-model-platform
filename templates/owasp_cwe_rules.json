@@ -1,0 +1,86 @@
+[
+  {
+    "id": "OWASP-A01-BROKEN-ACCESS",
+    "title": "Broken Access Control (OWASP A01)",
+    "severity": "critical",
+    "description": "Component '{name}' does not have explicit access controls defined. This may lead to unauthorized data access or privilege escalation.",
+    "mitigation": "Implement role-based access control (RBAC) and verify authorization on every request.",
+    "target": "component",
+    "criteria": [
+      { "field": "attributes.accessControl", "operator": "missing" },
+      { "field": "tags", "operator": "not_contains", "value": "public" }
+    ]
+  },
+  {
+    "id": "OWASP-A03-INJECTION",
+    "title": "Injection Vulnerability (OWASP A03 / CWE-89)",
+    "severity": "high",
+    "description": "The component '{name}' accepts input but does not specify validation or sanitization mechanisms, risking SQLi, NoSQLi, or Command Injection.",
+    "mitigation": "Use parameterized queries, ORMs, and strict input validation.",
+    "target": "component",
+    "criteria": [
+      { "field": "otmType", "operator": "equals", "value": "web-server" },
+      { "field": "attributes.inputValidation", "operator": "missing" }
+    ]
+  },
+  {
+    "id": "OWASP-A05-SECURITY-MISCONFIG",
+    "title": "Security Misconfiguration (OWASP A05)",
+    "severity": "medium",
+    "description": "Component '{name}' might have default configurations. For cloud resources, ensure hardening guidelines are followed.",
+    "mitigation": "Automate configuration hardening and disable unused features/defaults.",
+    "target": "component",
+    "criteria": [
+      { "field": "tags", "operator": "contains", "value": "azure" },
+      { "field": "attributes.hardened", "operator": "not_equals", "value": true }
+    ]
+  },
+  {
+    "id": "CWE-312-CLEAR-TEXT-STORAGE",
+    "title": "Cleartext Storage of Sensitive Information (CWE-312)",
+    "severity": "high",
+    "description": "Data store '{name}' does not explicitly enable encryption at rest.",
+    "mitigation": "Enable encryption at rest (e.g., TDE, SSE) for all sensitive data stores.",
+    "target": "component",
+    "criteria": [
+      { "field": "otmType", "operator": "equals", "value": "database" },
+      { "field": "attributes.encryptionAtRest", "operator": "not_equals", "value": true }
+    ]
+  },
+  {
+    "id": "CWE-319-CLEAR-TEXT-TRANSMISSION",
+    "title": "Cleartext Transmission of Sensitive Information (CWE-319)",
+    "severity": "high",
+    "description": "Component '{name}' allows unencrypted communication (HTTP/FTP).",
+    "mitigation": "Enforce TLS 1.2+ for all data in transit.",
+    "target": "component",
+    "criteria": [
+      { "field": "attributes.protocol", "operator": "equals", "value": "http" }
+    ]
+  },
+  {
+    "id": "CWE-798-HARDCODED-CREDS",
+    "title": "Use of Hard-coded Credentials (CWE-798)",
+    "severity": "critical",
+    "description": "Component '{name}' appears to handle secrets but is not associated with a Key Vault or HSM.",
+    "mitigation": "Move secrets to a dedicated secrets manager (e.g., Azure Key Vault) and access via managed identity.",
+    "target": "component",
+    "criteria": [
+      { "field": "otmType", "operator": "equals", "value": "microservice" },
+      { "field": "attributes.usesKeyVault", "operator": "not_equals", "value": true }
+    ]
+  },
+  {
+    "id": "AZURE-PUBLIC-BLOB",
+    "title": "Azure Blob Public Access",
+    "severity": "high",
+    "description": "Azure Storage Account '{name}' may have public access enabled.",
+    "mitigation": "Disable public blob access at the account level.",
+    "target": "component",
+    "criteria": [
+      { "field": "otmType", "operator": "equals", "value": "storage" },
+      { "field": "tags", "operator": "contains", "value": "azure" },
+      { "field": "attributes.publicAccess", "operator": "not_equals", "value": "off" }
+    ]
+  }
+]

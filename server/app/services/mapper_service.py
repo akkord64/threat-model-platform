@@ -67,9 +67,12 @@ class DiagramMapper:
             target = edge.get("target")
             data = edge.get("data", {})
 
+            # React Flow puts label at root, but sometimes we might store it in data
+            label = edge.get("label") or data.get("label") or f"Flow {source} -> {target}"
+
             df = DataFlow(
                 id=edge_id,
-                name=data.get("label", f"Flow {source} -> {target}"),
+                name=label,
                 source=source,
                 destination=target,
                 bidirectional=data.get("bidirectional", False),

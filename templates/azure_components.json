@@ -1,0 +1,126 @@
+[
+  {
+    "label": "Azure App Service",
+    "type": "otmComponent",
+    "otmType": "web-server",
+    "icon": "globe",
+    "defaultData": {
+      "label": "Azure App Service",
+      "otmType": "web-server",
+      "tags": ["azure", "paas", "https"],
+      "attributes": { "hosting": "azure-app-service", "wafEnabled": false }
+    }
+  },
+  {
+    "label": "Azure SQL Database",
+    "type": "otmComponent",
+    "otmType": "database",
+    "icon": "database",
+    "defaultData": {
+      "label": "Azure SQL",
+      "otmType": "database",
+      "tags": ["azure", "sql", "paas"],
+      "attributes": { "encryptionAtRest": true, "tde": true, "firewall": "enabled" }
+    }
+  },
+  {
+    "label": "Azure Blob Storage",
+    "type": "otmComponent",
+    "otmType": "storage",
+    "icon": "cloud",
+    "defaultData": {
+      "label": "Blob Storage",
+      "otmType": "storage",
+      "tags": ["azure", "storage"],
+      "attributes": { "publicAccess": "off", "softDelete": true }
+    }
+  },
+  {
+    "label": "Azure Key Vault",
+    "type": "otmComponent",
+    "otmType": "store",
+    "icon": "shield",
+    "defaultData": {
+      "label": "Key Vault",
+      "otmType": "store",
+      "tags": ["azure", "secrets", "hsm"],
+      "attributes": { "rbac": true }
+    }
+  },
+  {
+    "label": "Azure Kubernetes (AKS)",
+    "type": "otmComponent",
+    "otmType": "microservice",
+    "icon": "server",
+    "defaultData": {
+      "label": "AKS Cluster",
+      "otmType": "microservice",
+      "tags": ["azure", "k8s", "containers"],
+      "attributes": { "rbac": true, "networkPolicy": "calico" }
+    }
+  },
+  {
+    "label": "Azure Function",
+    "type": "otmComponent",
+    "otmType": "microservice",
+    "icon": "server",
+    "defaultData": {
+      "label": "Azure Function",
+      "otmType": "microservice",
+      "tags": ["azure", "serverless", "compute"],
+      "attributes": { "authLevel": "function" }
+    }
+  },
+  {
+    "label": "Azure Cosmos DB",
+    "type": "otmComponent",
+    "otmType": "database",
+    "icon": "database",
+    "defaultData": {
+      "label": "Cosmos DB",
+      "otmType": "database",
+      "tags": ["azure", "nosql"],
+      "attributes": { "consistency": "session" }
+    }
+  },
+  {
+    "label": "Public Internet (Zone)",
+    "type": "otmTrustZone",
+    "icon": "globe",
+    "defaultData": {
+      "label": "Public Internet",
+      "risk": { "confidentiality": 0, "integrity": 0, "availability": 100 }
+    }
+  },
+  {
+    "label": "Azure VNet (Zone)",
+    "type": "otmTrustZone",
+    "icon": "cloud",
+    "defaultData": {
+      "label": "Azure VNet",
+      "risk": { "confidentiality": 80, "integrity": 80, "availability": 90 }
+    }
+  },
+  {
+    "label": "External User",
+    "type": "otmComponent",
+    "otmType": "generic-client",
+    "icon": "smartphone",
+    "defaultData": {
+      "label": "User",
+      "otmType": "generic-client",
+      "tags": ["actor", "external"]
+    }
+  },
+  {
+    "label": "Admin Workstation",
+    "type": "otmComponent",
+    "otmType": "generic-client",
+    "icon": "monitor",
+    "defaultData": {
+      "label": "Admin PC",
+      "otmType": "generic-client",
+      "tags": ["actor", "internal", "privileged"]
+    }
+  }
+]

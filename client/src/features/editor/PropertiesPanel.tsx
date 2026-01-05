@@ -1,5 +1,5 @@
-import { useDiagramStore, AppNode } from "../../store/diagramStore";
-import { X, Settings2 } from 'lucide-react';
+import { useDiagramStore, type AppNode } from "../../store/diagramStore";
+import { X, Settings2, ShieldAlert } from 'lucide-react';
 
 export default function PropertiesPanel() {
     // Connect to store

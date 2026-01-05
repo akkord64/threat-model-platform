@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { Handle, Position, type NodeProps } from '@xyflow/react'; // <--- FIXED
+import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { Database, Server, Globe, Box } from 'lucide-react';
 import clsx from 'clsx';
-import { type OTMNodeData } from '../../../store/diagramStore'; // <--- FIXED
+import { type AppNode } from '../../../store/diagramStore';
 
 const getIcon = (type?: string) => {
     switch (type) {
@@ -13,7 +13,7 @@ const getIcon = (type?: string) => {
     }
 }
 
-const ComponentNode = memo(({ data, selected }: NodeProps<OTMNodeData>) => {
+const ComponentNode = memo(({ data, selected }: NodeProps<AppNode>) => {
     return (
         <div
             className={clsx(

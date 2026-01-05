@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { Handle, Position, type NodeProps } from '@xyflow/react'; // <--- FIXED
+import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { ShieldAlert } from 'lucide-react';
 import clsx from 'clsx';
-import { type OTMNodeData } from '../../../store/diagramStore'; // <--- FIXED
+import { type AppNode } from '../../../store/diagramStore';
 
-const TrustZoneNode = memo(({ data, selected }: NodeProps<OTMNodeData>) => {
+const TrustZoneNode = memo(({ data, selected }: NodeProps<AppNode>) => {
     // Default to 0 if risk is undefined
     const risk = data.risk || { confidentiality: 0, integrity: 0, availability: 0 };
     const avgRisk = Math.round((risk.confidentiality + risk.integrity + risk.availability) / 3);
